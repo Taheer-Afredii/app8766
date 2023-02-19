@@ -1,15 +1,14 @@
 import 'dart:developer';
-import 'dart:io';
 
 import 'package:app_876/core/constants/assets.dart';
 import 'package:app_876/core/constants/colors.dart';
 import 'package:app_876/core/constants/styles.dart';
 import 'package:app_876/core/extensions/string_extension.dart';
-import 'package:app_876/ui/Screens/BusinessSideApp/AuthScreens/BusinessSignUPScreen/AddWEmployViewmodel.dart';
 import 'package:app_876/ui/Screens/BusinessSideApp/AuthScreens/BusinessSignUPScreen/business_signup_viewmodel.dart';
 import 'package:app_876/ui/Screens/CustomerSideApp/AuthScreens/CustomerSignUPScreen/CustomerSignUpScreen.dart';
 import 'package:app_876/ui/Screens/CustomerSideApp/HomeScreen/HomeScreenModel.dart';
 import 'package:app_876/ui/Screens/CustomerSideApp/OnBoardingScreens/OnBoardingScreens.dart';
+import 'package:country_code_picker/country_code_picker.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -43,6 +42,8 @@ class _BusinessSignUpScreenState extends State<BusinessSignUpScreen> {
     '16-20',
     '20-24',
   ];
+  String countryCode = '';
+  String finalPhoneNumber = '';
 
 //phone validation
   final RegExp phoneRegex = RegExp(r'^\+?[0-9]{10,12}$');
@@ -266,21 +267,60 @@ class _BusinessSignUpScreenState extends State<BusinessSignUpScreen> {
                           dropDownType: DropDownType.numberOfEmployees,
                         ),
                         SizedBox(height: 20.h),
-                        TextFieldwithTitleWidget(
-                          textInputType: TextInputType.phone,
-                          controller: model.businessPhoneNumberController,
-                          hintText: 'Mobile/phone number',
-                          title: 'Business Phone number',
-                          validator: (value) {
-                            if (value!.isEmpty) {
-                              return 'Please enter your phone number';
-                            }
-                            if (!validatePhoneNumber(value)) {
-                              return 'Please enter a valid phone number';
-                            }
-                            return null;
-                          },
+                        Row(
+                          children: [
+                            Padding(
+                              padding: EdgeInsets.only(top: 20.h),
+                              child: CountryCodePicker(
+                                searchStyle: avenir55RomanStyle(),
+                                initialSelection: 'United Kingdom',
+                                textStyle: avenir55RomanStyle(),
+                                textOverflow: TextOverflow.ellipsis,
+                                onChanged: (value) {
+                                  setState(() {
+                                    countryCode = value.dialCode!;
+                                  });
+                                  print(
+                                      "this is phone number ${countryCode + model.businessPhoneNumberController.text}");
+                                },
+                                boxDecoration: BoxDecoration(
+                                  color: whiteColor,
+                                  borderRadius: BorderRadius.circular(12.r),
+                                ),
+                                showFlagDialog: true,
+                                showFlag: false,
+                              ),
+                            ),
+                            TextFieldwithTitleWidget(
+                              textInputType: TextInputType.phone,
+                              width: 310.w,
+                              title: 'Phone Number',
+                              hintText: '398-981287-4',
+                              controller: model.businessPhoneNumberController,
+                              validator: (value) {
+                                if (value!.isEmpty) {
+                                  return "Phone Number is required".tr;
+                                }
+                                return null;
+                              },
+                            ),
+                          ],
                         ),
+                        // TextFieldwithTitleWidget(
+                        //   textInputType: TextInputType.phone,
+                        //   controller: model.businessPhoneNumberController,
+                        //   hintText: 'Mobile/phone number',
+                        //   title: 'Business Phone number',
+                        //   validator: (value) {
+                        //     if (value!.isEmpty) {
+                        //       return 'Please enter your phone number';
+                        //     }
+                        //     if (!validatePhoneNumber(value)) {
+                        //       return 'Please enter a valid phone number';
+                        //     }
+                        //     return null;
+                        //   },
+                        // ),
                         SizedBox(height: 20.h),
                         TextFieldwithTitleWidget(
                           textInputType: TextInputType.emailAddress,
@@ -337,160 +377,52 @@ class _BusinessSignUpScreenState extends State<BusinessSignUpScreen> {
                           hintText: 'Business Details',
                           title: 'About business',
                         ),
-
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Container(
-                                  margin: EdgeInsets.only(top: 5.h),
-                                  height: 70.h,
-                                  width: 60.w,
-                                  decoration: BoxDecoration(
-                                      // color: Colors.green,
-                                      ),
-                                  child: Consumer<BusinessAddEmployProvider>(
-                                    builder: (context, value, child) => InkWell(
-                                        onTap: () {
-                                          value.getNameAndImageBottomSheet(
-                                              context);
-                                        },
-                                        child: CircleAvatar(
-                                            backgroundColor: greenColor,
-                                            child: Icon(
-                                              Icons.add,
-                                              color: whiteColor,
-                                            ))),
-                                  ),
-                                ),
-                                Consumer<BusinessAddEmployProvider>(
-                                  builder: (context, value, child) {
-                                    return Center(
-                                      child: Text(
-                                        value.name,
-                                        style: TextStyle(
-                                          fontSize: 9.sp,
-                                        ),
-                                      ),
-                                    );
-                                  },
-                                )
-                              ],
-                            ),
-                            SizedBox(
-                              width: 10.w,
-                            ),
-                            Container(
-                              height: 60.h,
-                              width: 1.w,
-                              color: Colors.red,
-                            ),
-                            SizedBox(
-                              width: 10.w,
-                            ),
-                            Consumer<BusinessAddEmployProvider>(
-                                builder: (context, value, child) {
-                              return SizedBox(
-                                height: 80.h,
-                                width: 0.65.sw,
-                                child: ListView.builder(
-                                    shrinkWrap: true,
-                                    scrollDirection: Axis.horizontal,
-
-                                    // shrinkWrap: true,
-                                    itemCount: value.employeeList.length,
-                                    itemBuilder: (context, index) {
-                                      return Padding(
-                                        padding: EdgeInsets.symmetric(
-                                            horizontal: 5.w),
-                                        child: Column(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.center,
-                                          children: [
-                                            CircleAvatar(
-                                              radius: 25.r,
-                                              backgroundImage: FileImage(File(
-                                                  value.employeeList[index]
-                                                      .image)),
-                                            ),
-                                            SizedBox(height: 5.h),
-                                            avenir55RomanText(
-                                              text: value
-                                                  .employeeList[index].name,
-                                            )
-                                          ],
-                                        ),
-                                      );
-                                    }),
-                              );
-                            }),
-                            SizedBox(
-                              width: 10.w,
-                            ),
-                          ],
-                        ),
-                        Consumer<BusinessAddEmployProvider>(
-                            builder: (context, model, child) {
-                          return model.addEmployLoading
-                              ? kCircularProgress()
-                              : GestureDetector(
-                                  onTap: () {
-                                    model.addEmployee();
-                                  },
-                                  child: CustomGloballyUsedButtonWidget(
-                                    centerTitle: "Test",
-                                  ),
-                                );
-                        }),
-
                         SizedBox(height: 50.h),
                         model.loading == true
                             ? kCircularProgress()
                             : GestureDetector(
                                 onTap: () async {
-                                  // log("${model.selectedDropdownItem}");
-                                  // log("model is loading ${model.isLoading}");
-                                  // if (model.profileImage == null &&
-                                  //     model.coverImage == null) {
-                                  //   Get.snackbar("Error", "Image are required");
-                                  // } else if (model.genderCategoryBool == null) {
-                                  //   Get.snackbar(
-                                  //       "Error", "Gender category is required");
-                                  // } else if (model.numberOfEmployeesBool ==
-                                  //     null) {
-                                  //   Get.snackbar(
-                                  //       "Error", "Employee Number is required");
-                                  // } else if (model.genderCategoryBool == null) {
-                                  //   Get.snackbar(
-                                  //       "Error", "Gender category is required");
-                                  // } else {
-                                  //   if (formKey.currentState!.validate()) {
-                                  //     if (model.phoneList.contains(model
-                                  //         .businessPhoneNumberController
-                                  //         .text)) {
-                                  //       Get.snackbar(
-                                  //         'Error',
-                                  //         'Phone Number already exists',
-                                  //         snackPosition: SnackPosition.BOTTOM,
-                                  //         backgroundColor: Colors.red,
-                                  //         colorText: Colors.white,
-                                  //       );
-                                  //     } else if (model.emailList.contains(
-                                  //         model.businessEmailController.text)) {
-                                  //       Get.snackbar(
-                                  //         'Error',
-                                  //         'Email already exists',
-                                  //         snackPosition: SnackPosition.BOTTOM,
-                                  //         backgroundColor: Colors.red,
-                                  //         colorText: Colors.white,
-                                  //       );
-                                  //     } else {
-                                  //       await model.phoneAuthentication();
-                                  //     }
-                                  //   }
-                                  // }
+                                  log("${model.selectedDropdownItem}");
+                                  log("model is loading ${model.isLoading}");
+                                  if (model.profileImage == null &&
+                                      model.coverImage == null) {
+                                    Get.snackbar("Error", "Image are required");
+                                  } else if (model.genderCategoryBool == null) {
+                                    Get.snackbar(
+                                        "Error", "Gender category is required");
+                                  } else if (model.numberOfEmployeesBool ==
+                                      null) {
+                                    Get.snackbar(
+                                        "Error", "Employee Number is required");
+                                  } else if (model.genderCategoryBool == null) {
+                                    Get.snackbar(
+                                        "Error", "Gender category is required");
+                                  } else {
+                                    if (formKey.currentState!.validate()) {
+                                      if (model.phoneList.contains(model
+                                          .businessPhoneNumberController
+                                          .text)) {
+                                        Get.snackbar(
+                                          'Error',
+                                          'Phone Number already exists',
+                                          snackPosition: SnackPosition.BOTTOM,
+                                          backgroundColor: Colors.red,
+                                          colorText: Colors.white,
+                                        );
+                                      } else if (model.emailList.contains(
+                                          model.businessEmailController.text)) {
+                                        Get.snackbar(
+                                          'Error',
+                                          'Email already exists',
+                                          snackPosition: SnackPosition.BOTTOM,
+                                          backgroundColor: Colors.red,
+                                          colorText: Colors.white,
+                                        );
+                                      } else {
+                                        await model.phoneAuthentication();
+                                      }
+                                    }
+                                  }
                                 },
                                 child: CustomGloballyUsedButtonWidget(
                                     centerTitle: model.isLoading == false

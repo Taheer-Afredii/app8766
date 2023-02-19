@@ -46,7 +46,6 @@ class HomeScreenViewModel extends ChangeNotifier {
   }
 
   //dispose will be called automatically
-
 }
 
 List<String> serviceImages = [

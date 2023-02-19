@@ -4,7 +4,6 @@ import 'package:app_876/core/constants/styles.dart';
 import 'package:app_876/core/extensions/string_extension.dart';
 import 'package:app_876/service/localDatabase/local_db.dart';
 import 'package:app_876/ui/Screens/BusinessSideApp/AppointmentSettings/AppointmentSettings.dart';
-import 'package:app_876/ui/Screens/BusinessSideApp/BusinessDrawer/BusnesUserDetails.dart';
 import 'package:app_876/ui/Screens/BusinessSideApp/CustomerFeedBackScreen/CustomerFeedBackScreen.dart';
 import 'package:app_876/ui/Screens/BusinessSideApp/MyBusinessProfileScreen/MyBusinessProfileScreen.dart';
 import 'package:app_876/ui/Screens/BusinessSideApp/MyBusinessProfileScreen/business_profile_viewmodel.dart';
@@ -25,7 +24,6 @@ class BusinessDrawar extends StatelessWidget {
       create: (context) => BusinessProfileViewModel(),
       child:
           Consumer<BusinessProfileViewModel>(builder: (cotext, model, child) {
-        BusinessUserDetails model2 = Provider.of<BusinessUserDetails>(context);
         return Drawer(
           backgroundColor: Colors.transparent,
           elevation: 0,
@@ -56,7 +54,7 @@ class BusinessDrawar extends StatelessWidget {
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            model2.businessUser.image == null
+                            model.businessUser.image == null
                                 ? CircleAvatar(
                                     backgroundColor: whiteColor,
                                     radius: 60.r,
@@ -64,8 +62,8 @@ class BusinessDrawar extends StatelessWidget {
                                   )
                                 : CircleAvatar(
                                     radius: 60.r,
-                                    backgroundImage: NetworkImage(
-                                        model2.businessUser.image!),
+                                    backgroundImage:
+                                        NetworkImage(model.businessUser.image!),
                                   ),
                             // model.customerUserModel.image != null
                             //     ? CircleAvatar(
@@ -83,7 +81,7 @@ class BusinessDrawar extends StatelessWidget {
                             SizedBox(height: 10.h),
                             avenir55RomanText(
                               text:
-                                  model2.businessUser.businessName ?? "loading",
+                                  model.businessUser.businessName ?? "loading",
                               // model.customerUserModel.name!,
                               fontSize: 20.sp,
                               color: whiteColor,

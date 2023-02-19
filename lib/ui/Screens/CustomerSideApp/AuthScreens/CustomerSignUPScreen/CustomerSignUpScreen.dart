@@ -276,7 +276,8 @@ class _CustomerSignUpScreenState extends State<CustomerSignUpScreen> {
                               }
                             },
                             child: CustomGloballyUsedButtonWidget(
-                                centerTitle: 'SIGN UP'),
+                              centerTitle: 'SIGN UP',
+                            ),
                           ),
                     SizedBox(height: 20.h),
                     Center(

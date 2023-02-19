@@ -6,7 +6,6 @@ import 'package:app_876/core/constants/styles.dart';
 import 'package:app_876/core/extensions/string_extension.dart';
 import 'package:app_876/ui/CustomWidgets/BusinessHomeScreenAppBarWidget.dart';
 import 'package:app_876/ui/Screens/BusinessSideApp/BusinessDrawer/BusinessDrawer.dart';
-import 'package:app_876/ui/Screens/BusinessSideApp/BusinessDrawer/BusnesUserDetails.dart';
 import 'package:app_876/ui/Screens/BusinessSideApp/HomeScreen/business_HomeScreen_viewmodel.dart';
 import 'package:app_876/ui/Screens/BusinessSideApp/HomeScreen/requested_user_details.dart';
 import 'package:app_876/ui/Screens/CustomerSideApp/OnBoardingScreens/OnBoardingScreens.dart';
@@ -35,7 +34,6 @@ class _BusinessHomeScreen extends State<BusinessHomeScreen> {
       create: (context) => BusinessHomeScreenViewModel(),
       child: Consumer<BusinessHomeScreenViewModel>(
           builder: (context, model, child) {
-        BusinessUserDetails model2 = Provider.of<BusinessUserDetails>(context);
         return Scaffold(
           drawer: BusinessDrawar(),
           appBar: BusinessHomeScreenAppBarWidget(

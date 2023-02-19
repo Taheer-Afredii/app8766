@@ -16,6 +16,7 @@ class BusinessProfileViewModel extends ChangeNotifier {
 
     FirebaseServices().businessUserFromFirebase(businessUser).then((value) {
       businessUser = value;
+      notifyListeners();
     });
     loading = false;
     notifyListeners();

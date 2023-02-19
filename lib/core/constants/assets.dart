@@ -79,6 +79,8 @@ String visacardImage = '$staticImagePath/visacardImage.png';
 String deleteAccountPersonImage =
     '$staticImagePath/deleteAccountPersonImage.png';
 
+String dummyCoverImage = '$staticImagePath/dummyCoverImage.png';
+
 //BusinessSideIside
 
 String myWalletBackgroundImage = '$staticImagePath/myWalletBackgroundImage.png';

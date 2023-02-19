@@ -1,15 +1,14 @@
 import 'package:app_876/ui/Screens/BusinessSideApp/AuthScreens/BusinessSignInScreen/business_signin_viewmodel.dart';
-import 'package:app_876/ui/Screens/BusinessSideApp/AuthScreens/BusinessSignUPScreen/AddWEmployViewmodel.dart';
 import 'package:app_876/ui/Screens/BusinessSideApp/AuthScreens/BusinessSignUPScreen/business_signup_viewmodel.dart';
 import 'package:app_876/ui/Screens/BusinessSideApp/AuthScreens/GetBusinessLocationScreen/BusinessLocationViewModel.dart';
 import 'package:app_876/ui/Screens/BusinessSideApp/AuthScreens/UploadBusinessFilesScreen/UploadBusinessFilesScreenModel.dart';
 import 'package:app_876/ui/Screens/BusinessSideApp/AuthScreens/auth_viewModel.dart';
 import 'package:app_876/ui/Screens/BusinessSideApp/AuthScreens/service_addition_viewmodel.dart';
-import 'package:app_876/ui/Screens/BusinessSideApp/BusinessDrawer/BusnesUserDetails.dart';
 import 'package:app_876/ui/Screens/CustomerSideApp/AuthScreens/customer_authscreens_viewmodel.dart';
 import 'package:app_876/ui/Screens/CustomerSideApp/AuthScreens/CustomerSignINScreen/customer_signin_viewmodel.dart';
 import 'package:app_876/ui/Screens/CustomerSideApp/AuthScreens/CustomerSignUPScreen/customer_sign_up_viewmodel.dart';
 import 'package:app_876/ui/Screens/CustomerSideApp/FavoriteScreen/favorite_ViewModel.dart';
+import 'package:app_876/ui/Screens/CustomerSideApp/HomeScreen/HomeScreenModel.dart';
 import 'package:app_876/ui/Screens/CustomerSideApp/HomeScreen/mapScreenViewModel.dart';
 import 'package:app_876/ui/Screens/CustomerSideApp/ServiceSearchScreen/SearviceSearchScreenViewmodel.dart';
 import 'package:app_876/ui/Screens/CustomerSideApp/ConfirmAppointmentScreen/confirmAppointmentViewmodel.dart';
@@ -24,13 +23,11 @@ List<SingleChildWidget> providers = [
 
   ChangeNotifierProvider<BusinessSignUpViewModel>(
       create: (_) => BusinessSignUpViewModel()),
-  ChangeNotifierProvider<BusinessAddEmployProvider>(
-      create: (_) => BusinessAddEmployProvider()),
 
   //signin
 
-  ChangeNotifierProvider<BusinessUserDetails>(
-      create: (_) => BusinessUserDetails()),
+  // ChangeNotifierProvider<BusinessHomeScreenViewModel>(
+  //     create: (_) => BusinessHomeScreenViewModel()),
   ChangeNotifierProvider<BusinessSignInViewModel>(
       create: (_) => BusinessSignInViewModel()),
 

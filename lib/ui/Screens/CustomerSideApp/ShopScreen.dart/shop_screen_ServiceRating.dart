@@ -7,12 +7,12 @@ import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
-class RatingToBusinessByCustomerViewModel extends ChangeNotifier {
+class ShopScreenServiceRatingViewModel extends ChangeNotifier {
   List<RatingModel> ratingList = [];
   double rating = 0.0;
   double sum = 0.0;
 
-  RatingToBusinessByCustomerViewModel() {
+  ShopScreenServiceRatingViewModel() {
     allFunction();
   }
 
@@ -42,39 +42,32 @@ class RatingToBusinessByCustomerViewModel extends ChangeNotifier {
     var uid =
         Provider.of<ServiceSearchScreenViewmodel>(Get.context!, listen: false)
             .buid;
-    log("buid $uid");
 
-    uid == ""
-        ? null
-        : await FirebaseFirestore.instance
-            .collection('BusinessUsers')
-            .doc(uid)
-            .snapshots()
-            .listen(
-            (event) {
-              if (event.exists) {
-                if (event.data()!['ratingByCustomers'] != null) {
-                  sum = 0;
-                  rating = 0.0;
+    await FirebaseFirestore.instance
+        .collection('BusinessUsers')
+        .doc(uid)
+        .snapshots()
+        .listen(
+      (event) {
+        if (event.data()!['ratingByCustomers'] != null) {
+          sum = 0;
+          rating = 0.0;
 
-                  ratingList.clear();
-                  event.data()!['ratingByCustomers'].forEach((element) {
-                    ratingList.add(RatingModel.fromFirebase(element));
-                  });
-                  log("ratingList ${ratingList.length}");
+          ratingList.clear();
+          event.data()!['ratingByCustomers'].forEach((element) {
+            ratingList.add(RatingModel.fromFirebase(element));
+          });
+          log("ratingList ${ratingList.length}");
 
-                  ratingList.forEach((element) {
-                    sum = sum + element.rating!;
-                  });
-                  log("sum $sum");
-                  rating = sum / ratingList.length;
-                  notifyListeners();
-                }
-              } else {
-                log("no data");
-              }
-            },
-          );
+          ratingList.forEach((element) {
+            sum = sum + element.rating!;
+          });
+          log("sum $sum");
+          rating = sum / ratingList.length;
+          notifyListeners();
+        }
+      },
+    );
   }
 }
 

@@ -1,5 +1,5 @@
-import 'package:app_876/ui/Screens/BusinessSideApp/BusinessDrawer/BusnesUserDetails.dart';
 import 'package:app_876/ui/Screens/BusinessSideApp/MyBusinessProfileScreen/MyBusinessProfileScreen.dart';
+import 'package:app_876/ui/Screens/BusinessSideApp/MyBusinessProfileScreen/business_profile_viewmodel.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -17,52 +17,57 @@ class BusinessHomeScreenAppBarWidget extends StatelessWidget
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<BusinessUserDetails>(builder: (context, model, child) {
-      return PreferredSize(
-        preferredSize: Size.fromHeight(130.h),
-        child: Container(
-          height: 130.h,
-          width: 1.sw,
-          decoration: BoxDecoration(
-            color: darkGreyColor,
-            borderRadius: BorderRadius.only(
-              bottomLeft: Radius.circular(30.r),
-              bottomRight: Radius.circular(30.r),
+    return ChangeNotifierProvider(
+      create: (context) => BusinessProfileViewModel(),
+      child:
+          Consumer<BusinessProfileViewModel>(builder: (context, model, child) {
+        return PreferredSize(
+          preferredSize: Size.fromHeight(130.h),
+          child: Container(
+            height: 130.h,
+            width: 1.sw,
+            decoration: BoxDecoration(
+              color: darkGreyColor,
+              borderRadius: BorderRadius.only(
+                bottomLeft: Radius.circular(30.r),
+                bottomRight: Radius.circular(30.r),
+              ),
             ),
-          ),
-          child: SafeArea(
-            child: Padding(
-              padding: EdgeInsets.symmetric(horizontal: 20.w),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  InkWell(
-                    onTap: () {
-                      Scaffold.of(context).openDrawer();
-                    },
-                    child: Image.asset(drawerIcon, width: 25.w, height: 25.h),
-                  ),
-                  centerWidget,
-                  InkWell(
+            child: SafeArea(
+              child: Padding(
+                padding: EdgeInsets.symmetric(horizontal: 20.w),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    InkWell(
                       onTap: () {
-                        Get.to(() => MyBusinessProfileScreen());
+                        Scaffold.of(context).openDrawer();
                       },
-                      child: model.businessUser.image == null
-                          ? CircleAvatar(
-                              radius: 15.r,
-                              child: Icon(Icons.person),
-                            )
-                          : CircleAvatar(
-                              radius: 15.r,
-                              backgroundImage:
-                                  NetworkImage(model.businessUser.image!),
-                            )),
-                ],
+                      child: Image.asset(drawerIcon, width: 25.w, height: 25.h),
+                    ),
+                    centerWidget,
+                    InkWell(
+                        onTap: () {
+                          //TODO: Add appropriate function here
+                          Get.to(() => MyBusinessProfileScreen());
+                        },
+                        child: model.businessUser.image == null
+                            ? CircleAvatar(
+                                radius: 15.r,
+                                child: Icon(Icons.person),
+                              )
+                            : CircleAvatar(
+                                radius: 15.r,
+                                backgroundImage:
+                                    NetworkImage(model.businessUser.image!),
+                              )),
+                  ],
+                ),
               ),
             ),
           ),
-        ),
-      );
-    });
+        );
+      }),
+    );
   }
 }

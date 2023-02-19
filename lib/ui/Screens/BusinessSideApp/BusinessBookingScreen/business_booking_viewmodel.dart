@@ -53,6 +53,7 @@ class BusinessBookingViewModel extends ChangeNotifier {
         upcomingOrdersIds.add(value.docs[i].id);
       }
     });
+    notifyListeners();
   }
 
 //>>>>>>>>>>accepted orders <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
@@ -79,11 +80,10 @@ class BusinessBookingViewModel extends ChangeNotifier {
                 firebase: event.docs[i].data()));
           }
         }
-
-        await getBusinessUpcomingOrders();
         acceptedLoading = false;
-        notifyListeners();
+        await getBusinessUpcomingOrders();
       });
+      notifyListeners();
     }
   }
 
@@ -130,6 +130,8 @@ class BusinessBookingViewModel extends ChangeNotifier {
         notifyListeners();
       });
     }
+
+    notifyListeners();
   }
 
   //>>>>>>>>>>get business awaiting orders>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>

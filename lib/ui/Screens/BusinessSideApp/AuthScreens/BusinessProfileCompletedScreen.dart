@@ -2,7 +2,6 @@ import 'package:app_876/core/constants/assets.dart';
 import 'package:app_876/core/constants/colors.dart';
 import 'package:app_876/core/constants/styles.dart';
 import 'package:app_876/core/extensions/string_extension.dart';
-import 'package:app_876/ui/Screens/BusinessSideApp/AuthScreens/BusinessSignUPScreen/AddWEmployViewmodel.dart';
 import 'package:app_876/ui/Screens/BusinessSideApp/AuthScreens/BusinessSignUPScreen/business_signup_viewmodel.dart';
 import 'package:app_876/ui/Screens/BusinessSideApp/BottomNavScreen/MainBusinessBottomNavigationBar.dart';
 import 'package:app_876/ui/Screens/CustomerSideApp/OnBoardingScreens/OnBoardingScreens.dart';
@@ -27,8 +26,6 @@ class _BusinessProfileCompletScreenState
   Widget build(BuildContext context) {
     BusinessSignUpViewModel model =
         Provider.of<BusinessSignUpViewModel>(context);
-    BusinessAddEmployProvider addEmplyModel =
-        Provider.of<BusinessAddEmployProvider>(context);
 
     return Scaffold(
       body: SingleChildScrollView(
@@ -111,15 +108,13 @@ class _BusinessProfileCompletScreenState
                 ],
               ),
               SizedBox(height: 30.h),
-              model.dataLoading || addEmplyModel.addEmployLoading
+              model.dataLoading
                   ? kCircularProgress()
                   : GestureDetector(
                       onTap: () async {
                         if (isChecked == true) {
                           await model.userAllDataToFirebase();
-                          await addEmplyModel.addEmployee(
-                              uid: model.busineesUid);
-                          await await Get.offAll(
+                          await Get.offAll(
                               () => MainBusinessBottomNavigationBar());
                         } else {
                           Get.snackbar(

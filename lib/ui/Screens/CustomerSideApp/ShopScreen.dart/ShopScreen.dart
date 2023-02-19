@@ -483,8 +483,8 @@ class RatingsTabViewScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
-      create: (context) => RatingToBusinessByCustomerViewModel(),
-      child: Consumer<RatingToBusinessByCustomerViewModel>(
+      create: (context) => ShopScreenServiceRatingViewModel(),
+      child: Consumer<ShopScreenServiceRatingViewModel>(
           builder: (context, model, child) {
         return Padding(
           padding: EdgeInsets.symmetric(horizontal: 20.w),
