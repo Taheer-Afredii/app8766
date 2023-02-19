@@ -1,4 +1,5 @@
 import 'package:app_876/ui/Screens/BusinessSideApp/AuthScreens/BusinessSignInScreen/business_signin_viewmodel.dart';
+import 'package:app_876/ui/Screens/BusinessSideApp/AuthScreens/BusinessSignUPScreen/AddNewEmployModel.dart';
 import 'package:app_876/ui/Screens/BusinessSideApp/AuthScreens/BusinessSignUPScreen/business_signup_viewmodel.dart';
 import 'package:app_876/ui/Screens/BusinessSideApp/AuthScreens/GetBusinessLocationScreen/BusinessLocationViewModel.dart';
 import 'package:app_876/ui/Screens/BusinessSideApp/AuthScreens/UploadBusinessFilesScreen/UploadBusinessFilesScreenModel.dart';
@@ -19,10 +20,13 @@ import 'package:provider/provider.dart';
 import 'package:provider/single_child_widget.dart';
 
 List<SingleChildWidget> providers = [
-  // Add your providers here
+  // Add your providers her
+  // e
 
   ChangeNotifierProvider<BusinessSignUpViewModel>(
       create: (_) => BusinessSignUpViewModel()),
+  ChangeNotifierProvider<BusinessAddEmployProvider>(
+      create: (_) => BusinessAddEmployProvider()),
 
   //signin
 

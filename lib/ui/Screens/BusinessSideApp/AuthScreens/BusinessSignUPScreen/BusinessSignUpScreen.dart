@@ -1,9 +1,11 @@
 import 'dart:developer';
+import 'dart:io';
 
 import 'package:app_876/core/constants/assets.dart';
 import 'package:app_876/core/constants/colors.dart';
 import 'package:app_876/core/constants/styles.dart';
 import 'package:app_876/core/extensions/string_extension.dart';
+import 'package:app_876/ui/Screens/BusinessSideApp/AuthScreens/BusinessSignUPScreen/AddNewEmployModel.dart';
 import 'package:app_876/ui/Screens/BusinessSideApp/AuthScreens/BusinessSignUPScreen/business_signup_viewmodel.dart';
 import 'package:app_876/ui/Screens/CustomerSideApp/AuthScreens/CustomerSignUPScreen/CustomerSignUpScreen.dart';
 import 'package:app_876/ui/Screens/CustomerSideApp/HomeScreen/HomeScreenModel.dart';
@@ -376,6 +378,101 @@ class _BusinessSignUpScreenState extends State<BusinessSignUpScreen> {
                           controller: model.businessDetailsController,
                           hintText: 'Business Details',
                           title: 'About business',
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Container(
+                                  margin: EdgeInsets.only(top: 5.h),
+                                  height: 70.h,
+                                  width: 60.w,
+                                  decoration: BoxDecoration(
+                                      // color: Colors.green,
+                                      ),
+                                  child: Consumer<BusinessAddEmployProvider>(
+                                    builder: (context, value, child) => InkWell(
+                                        onTap: () {
+                                          value.getNameAndImageBottomSheet(
+                                              context);
+                                        },
+                                        child: CircleAvatar(
+                                            backgroundColor: lightGreyColor,
+                                            child: Icon(
+                                              Icons.add,
+                                              color: whiteColor,
+                                            ))),
+                                  ),
+                                ),
+                                Consumer<BusinessAddEmployProvider>(
+                                  builder: (context, value, child) {
+                                    return Center(
+                                      child: Text(
+                                        value.name,
+                                        style: TextStyle(
+                                          fontSize: 9.sp,
+                                        ),
+                                      ),
+                                    );
+                                  },
+                                )
+                              ],
+                            ),
+                            SizedBox(
+                              width: 10.w,
+                            ),
+                            Container(
+                              height: 60.h,
+                              width: 1.w,
+                              color: Colors.red,
+                            ),
+                            SizedBox(
+                              width: 10.w,
+                            ),
+                            Consumer<BusinessAddEmployProvider>(
+                                builder: (context, value, child) {
+                              return SizedBox(
+                                height: 80.h,
+                                width: 0.65.sw,
+                                child: ListView.builder(
+                                    shrinkWrap: true,
+                                    scrollDirection: Axis.horizontal,
+
+                                    // shrinkWrap: true,
+                                    itemCount: value.employeeList.length,
+                                    itemBuilder: (context, index) {
+                                      return Padding(
+                                        padding: EdgeInsets.symmetric(
+                                            horizontal: 5.w),
+                                        child: Column(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.end,
+                                          children: [
+                                            CircleAvatar(
+                                              radius: 25.r,
+                                              backgroundImage: FileImage(File(
+                                                  value.employeeList[index]
+                                                      .image)),
+                                            ),
+                                            SizedBox(height: 5.h),
+                                            Text(
+                                              value.employeeList[index].name,
+                                              style: TextStyle(fontSize: 12.sp),
+                                              maxLines: 2,
+                                              overflow: TextOverflow.ellipsis,
+                                            ),
+                                          ],
+                                        ),
+                                      );
+                                    }),
+                              );
+                            }),
+                            SizedBox(
+                              width: 10.w,
+                            ),
+                          ],
                         ),
                         SizedBox(height: 50.h),
                         model.loading == true
